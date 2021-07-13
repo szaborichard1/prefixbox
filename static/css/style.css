@@ -82,3 +82,7 @@ img{
 	text-decoration: line-through;
 	color:red;
 }
+
+.nemLathato {
+    display: none;
+}
