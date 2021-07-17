@@ -17,14 +17,14 @@ function akcio() {
     })
 }
 
-function arNovekvo() {
+function arNovekvo(arak, tipus) {
     let termekek = document.querySelectorAll(".product")
-    let arak = []
-    let rendezett = []
-    for (let i = 0; i < termekek.length; i++) {
-        arak.push(parseInt(termekek[i].querySelector(".product-price").textContent.replace(" Ft", "").replace(".", "")))
+    if (tipus === "asc"){
+        arak.sort(function(a, b){return a-b})
     }
-    arak.sort()
+    else {
+        arak.reverse()
+    }
     for (let j = 0; j < arak.length; j++) {
         let ar = arak[j]
         for (let k = 0; termekek.length; k++) {
@@ -59,13 +59,8 @@ function arNovekvo() {
     }
 }
 
-function arCsokkeno() {
-    let termekek = document.querySelectorAll(".product")
-    let arak = []
-    let rendezett = []
-    for (let i = 0; i < termekek.length; i++) {
-        arak.push(parseInt(termekek[i].querySelector(".product-price").textContent.replace(" Ft", "").replace(".", "")))
-    }
+function arCsokkeno(arak, tipus) {
+    
     arak.reverse()
     for (let j = 0; j < arak.length; j++) {
         let ar = arak[j]
@@ -101,26 +96,44 @@ function arCsokkeno() {
     }
 }
 
-function abcNovekvo(termekek) {
-
+function abcNovekvo(joNevek) {
+    joNevek.sort()
+    console.log(joNevek)
 }
 
-function abcCsokkeno(termekek) {
+function abcCsokkeno(joNevekasc) {
+    let joNevek = []
+    for (let i=joNevekasc.length-1; i>=0; i--){
+        joNevek.push(joNevekasc[i])
+    }
+    console.log(joNevek)
+}
 
+function getData(tipus){
+    let data = tipus==="név"?document.querySelectorAll(".product-name"):document.querySelectorAll(".product-price")
+    let joData = []
+    for (let i=0; i<data.length; i++){
+        let egyData = tipus == "név"?data[i].textContent:data[i].textContent.replace(" Ft", "").replace(".", "")
+        joData.push(egyData)
+    }
+    console.log(data)
+    return joData
 }
 
 function dropdown() {
     let opciok = document.querySelector(".order")
+    let joArak = getData("ár")
+    let joNevek = getData("név")
     opciok.addEventListener("change", function () {
         console.log(document.querySelectorAll(".product"))
         if (opciok.value == 0) {
-            arNovekvo()
+            arNovekvo(joArak, "asc")
         } else if (opciok.value == 1) {
-            arCsokkeno()
+            arNovekvo(joArak, "desc")
         } else if (opciok.value == 2) {
-            abcNovekvo()
+            abcNovekvo(joNevek)
         } else {
-            abcCsokkeno()
+            abcCsokkeno(joNevek)
         }
     })
 }
